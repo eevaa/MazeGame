@@ -26,6 +26,7 @@ public class SelectCharView {
 	Image chlorine=null;
 	Image calcium=null;
 	Image nitrogen=null;
+        Image background = null;
 	JButton na=null;
 	JButton ca=null;
 	JButton cl=null;
@@ -36,7 +37,7 @@ public class SelectCharView {
 	ArrayList<JButton> elements=new ArrayList<JButton>();
 	ArrayList<String> players=new ArrayList<String>();
 	JFrame frame=new JFrame();
-	JPanel mainPanel=null;
+	BackgroundPanel mainPanel;
 	JPanel header=null;
 	JPanel footer=null;
 	JPanel grid=null;
@@ -48,12 +49,11 @@ public class SelectCharView {
 	}
 	
 	public void init2(){
-frame.setSize(1000,1000);
+                frame.setSize(1000,1000);
 		
 		
-		mainPanel=new JPanel();
 		header=new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+		
 		JLabel heading=new JLabel("Select 3 elements");
 		header.add(heading);
 		grid=new JPanel();
@@ -63,7 +63,7 @@ frame.setSize(1000,1000);
 		footer=new JPanel();
 		footer.add(startGame);
 		
-	
+                
 		
 		try {
 			sodium = ImageIO.read(this.getClass().getResource("/images/Na.png"));
@@ -80,11 +80,15 @@ frame.setSize(1000,1000);
 			nitrogen=nitrogen.getScaledInstance(100,100,1);
 			oxygen = ImageIO.read(this.getClass().getResource("/images/O.png"));
 			oxygen=oxygen.getScaledInstance(100,100,1);
+                        background = ImageIO.read(this.getClass().getResource("/images/bg.png"));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+                
+                mainPanel=new BackgroundPanel(background);
+                mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS)); 
 		na=new JButton(new ImageIcon(sodium));
 		na.setName("na");
 		elements.add(na);

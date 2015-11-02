@@ -15,6 +15,7 @@ CreateMazeView cmView=null;
 
 GameView gv=null;
 
+
 	public GameController(CreateMazeView cmView,MazeConfig maz) {
 		// TODO Auto-generated constructor stub
 		this.cmView=cmView;

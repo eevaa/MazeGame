@@ -37,7 +37,7 @@ public class CreateMazeView {
 		
 		
 		
-		scView.mainPanel.setLayout(new BoxLayout(scView.mainPanel, BoxLayout.Y_AXIS));
+                scView.mainPanel.setLayout(new BoxLayout(scView.mainPanel, BoxLayout.Y_AXIS));
 		JLabel heading=new JLabel("Click grid to create maze..");
 		scView.header.add(heading);
 		//scView.grid=new JPanel();
