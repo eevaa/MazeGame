@@ -1,14 +1,14 @@
 package maze;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import maze.SelectCharView;
 
 public class CreateMazeView {
 	
@@ -17,7 +17,7 @@ public class CreateMazeView {
 	JPanel horPanel=null;
 	int mazeDim=10;
 	JButton next=null;
-	JPanel panels[][]=new JPanel[mazeDim][mazeDim];
+	JPanel panels[][]=new JPanel[mazeDim][mazeDim+5];
 	
 	public CreateMazeView(SelectCharView scView){
 		this.scView=scView;
@@ -42,16 +42,19 @@ public class CreateMazeView {
 		scView.header.add(heading);
 		//scView.grid=new JPanel();
 		scView.grid.setLayout(new BoxLayout(scView.grid, BoxLayout.Y_AXIS));
+                
 		for(int i=0;i<mazeDim;i++){
 			//String horPanName="horpan"+i;
 		 horPanel=new JPanel();
-			for(int j=0;j<mazeDim;j++){
+                 horPanel.add(Box.createRigidArea(new Dimension(10, 0)));
+			for(int j=0;j<mazeDim+5;j++){
 				
 				JPanel innerPanel=new JPanel();
 				//innerPanel.setBackground(Color.BLACK);
 				innerPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 				horPanel.add(innerPanel);
 				panels[i][j]=innerPanel;
+                                //innerPanel.setSize(new Dimension(50,50));
 				
 			}
 			scView.grid.add(horPanel);

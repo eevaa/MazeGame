@@ -49,7 +49,7 @@ public class SelectCharView {
 	}
 	
 	public void init2(){
-                frame.setSize(1000,1000);
+                frame.setSize(1200,800);
 		
 		
 		header=new JPanel();
@@ -67,19 +67,19 @@ public class SelectCharView {
 		
 		try {
 			sodium = ImageIO.read(this.getClass().getResource("/images/Na.png"));
-			sodium=sodium.getScaledInstance(100,100,1);
+			//sodium=sodium.getScaledInstance(100,100,1);
 			carbon = ImageIO.read(this.getClass().getResource("/images/C.png"));
-			carbon=carbon.getScaledInstance(100,100,1);
+			//carbon=carbon.getScaledInstance(100,100,1);
 			chlorine = ImageIO.read(this.getClass().getResource("/images/Cl.png"));
-			chlorine=chlorine.getScaledInstance(100,100,1);
+			//chlorine=chlorine.getScaledInstance(100,100,1);
 			hydrogen = ImageIO.read(this.getClass().getResource("/images/H.png"));
-			hydrogen=hydrogen.getScaledInstance(100,100,1);
+			//hydrogen=hydrogen.getScaledInstance(100,100,1);
 			calcium = ImageIO.read(this.getClass().getResource("/images/Ca.png"));
-			calcium=calcium.getScaledInstance(100,100,1);
+			//calcium=calcium.getScaledInstance(100,100,1);
 			nitrogen = ImageIO.read(this.getClass().getResource("/images/N.png"));
-			nitrogen=nitrogen.getScaledInstance(100,100,1);
+			//nitrogen=nitrogen.getScaledInstance(100,100,1);
 			oxygen = ImageIO.read(this.getClass().getResource("/images/O.png"));
-			oxygen=oxygen.getScaledInstance(100,100,1);
+			//oxygen=oxygen.getScaledInstance(100,100,1);
                         background = ImageIO.read(this.getClass().getResource("/images/bg.png"));
 			
 		} catch (IOException e) {
@@ -142,7 +142,7 @@ public class SelectCharView {
 		Image temp=null;
 		try {
 			temp = ImageIO.read(this.getClass().getResource("/images/"+name+".png"));
-			temp=temp.getScaledInstance(100,100,1);
+			//temp=temp.getScaledInstance(100,100,1);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
