@@ -3,22 +3,18 @@ package maze;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.Font;
 import java.awt.Image;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.LineBorder;
-import maze.MazeConfig;
 
 public class GameView {
 
@@ -28,6 +24,11 @@ public class GameView {
 	Image mainChar=null;
 	JLabel mainElem=null;
 	MazeConfig maze=null;
+        
+        JPanel mainPanel=null;
+        JPanel header=null;
+        JLabel heading=null;
+        
 	public GameView(CreateMazeView cmView) {
 		// TODO Auto-generated constructor stub
 		this.cmView=cmView;
@@ -39,7 +40,7 @@ public class GameView {
 		int i = 0,j=0;
 		int[] index = null; 
 		for(i=0;i<cmView.mazeDim;i++){
-			for(j=0;j<cmView.mazeDim;j++){
+			for(j=0;j<cmView.mazeDim+10;j++){
 				if(cmView.panels[i][j]==pan){
 					index=new int[]{i, j};
 				}
@@ -123,9 +124,18 @@ public class GameView {
 		cmView.scView.header.removeAll();
 		cmView.scView.header.repaint();
 		cmView.scView.header.revalidate();
+                
+                
+                mainPanel = new JPanel();
+                header = new JPanel();
+                cmView.scView.mainPanel.setLayout(new BoxLayout(cmView.scView.mainPanel, BoxLayout.Y_AXIS));
+		JLabel heading=new JLabel("QUEST #1: ");
+                heading.setFont(new Font("Arial", Font.PLAIN, 24));
+                //cmView.scView.header.add(Box.createRigidArea(new Dimension(0, 30)));
+		cmView.scView.header.add(heading);
 		
 		for(int i=0;i<cmView.mazeDim;i++){
-			for(int j=0;j<cmView.mazeDim;j++){
+			for(int j=0;j<cmView.mazeDim+10;j++){
 				JPanel temp=cmView.panels[i][j];
 				temp.setBorder(BorderFactory.createDashedBorder(null));
 				//temp.setBorder(null);
@@ -148,10 +158,11 @@ public class GameView {
 			mainElem=new JLabel(new ImageIcon(mainChar));
 			mainElem.setSize(new Dimension(40,40));
 			mainElem.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		
+                           
 			
 			
 			startPanel.add(mainElem);
+                        
 			
 		
 	}

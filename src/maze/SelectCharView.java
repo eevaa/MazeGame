@@ -1,20 +1,23 @@
 package maze;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 public class SelectCharView {
 	
@@ -27,6 +30,11 @@ public class SelectCharView {
 	Image calcium=null;
 	Image nitrogen=null;
         Image background = null;
+        Image headingImg = null;
+        Image pickImg = null;
+        Image start;
+        JLabel heading;
+        JLabel pick;
 	JButton na=null;
 	JButton ca=null;
 	JButton cl=null;
@@ -41,6 +49,8 @@ public class SelectCharView {
 	JPanel header=null;
 	JPanel footer=null;
 	JPanel grid=null;
+        JPanel pickPane=null;
+        //Font gretoon;
 
 	public SelectCharView() {
 		// TODO Auto-generated constructor stub
@@ -49,21 +59,23 @@ public class SelectCharView {
 	}
 	
 	public void init2(){
-                frame.setSize(1200,800);
-		
+                frame.setSize(new Dimension(1300,800));
+                frame.setResizable(false);
+		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+                frame.setTitle("ChemGame");
 		
 		header=new JPanel();
 		
-		JLabel heading=new JLabel("Select 3 elements");
-		header.add(heading);
+		//JLabel heading=new JLabel("Select 3 elements");
+                
+		
 		grid=new JPanel();
 		grid.setLayout(new BoxLayout(grid, BoxLayout.Y_AXIS));
-		
-		startGame=new JButton("Next");
-		footer=new JPanel();
-		footer.add(startGame);
-		
                 
+                pickPane=new JPanel();
+		pickPane.setLayout(new BoxLayout(pickPane, BoxLayout.Y_AXIS));
+		
+                      
 		
 		try {
 			sodium = ImageIO.read(this.getClass().getResource("/images/Na.png"));
@@ -81,19 +93,60 @@ public class SelectCharView {
 			oxygen = ImageIO.read(this.getClass().getResource("/images/O.png"));
 			//oxygen=oxygen.getScaledInstance(100,100,1);
                         background = ImageIO.read(this.getClass().getResource("/images/bg.png"));
-			
+			headingImg = ImageIO.read(this.getClass().getResource("/images/heading.png"));
+                        pickImg = ImageIO.read(this.getClass().getResource("/images/pick.png"));
+                        start = ImageIO.read(this.getClass().getResource("/images/start.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
                 
+    
+                startGame = new JButton(new ImageIcon(start));
+                startGame.setPreferredSize(new Dimension(200, 80));
+                startGame.setBackground(new Color(75,202,210));
+                Border emptyBorder = BorderFactory.createEmptyBorder();
+                startGame.setBorder(emptyBorder);
+		footer=new JPanel();
+		footer.add(startGame);
+                
+                /*set font
+        
+                    try {
+                        //create the font to use. Specify the size!
+                        Font gretoon = Font.createFont(Font.TRUETYPE_FONT, new File("/images/Gretoon.ttf")).deriveFont(12f);
+                        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/images/Gretoon.ttf")));
+                        frame.setFont(gretoon);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    catch(FontFormatException e)
+                    {
+                        e.printStackTrace();
+                    }
+
+                    //heading.setFont(gretoon);
+                 */   
+                
                 mainPanel=new BackgroundPanel(background);
-                mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS)); 
+                mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+                
+                heading=new JLabel(new ImageIcon(headingImg));
+		heading.setName("heading");
+		header.add(heading);
+                header.add(Box.createRigidArea(new Dimension(0, 150)));
+                
+                pick=new JLabel(new ImageIcon(pickImg));
+		pick.setName("heading");
+		pickPane.add(pick);
+              
+                
 		na=new JButton(new ImageIcon(sodium));
 		na.setName("na");
 		elements.add(na);
-	
-		
+                
+                    
 		n=new JButton(new ImageIcon(nitrogen));
 		n.setName("n");
 		elements.add(n);
@@ -122,11 +175,16 @@ public class SelectCharView {
 			jb.setBorder(BorderFactory.createEmptyBorder());
 			jb.setContentAreaFilled(false);
 			grid.add(jb);
+                        grid.add(Box.createRigidArea(new Dimension(40, 0)));
 		}
 		
-	
+                header.add(heading);
 		grid.setLayout(new FlowLayout());
+                pickPane.setLayout(new BoxLayout(pickPane, BoxLayout.Y_AXIS));
+                pick.setAlignmentX(pick.CENTER_ALIGNMENT);
+                pickPane.add(Box.createRigidArea(new Dimension(0, 30)));
 		mainPanel.add(header);
+                mainPanel.add(pickPane);
 		mainPanel.add(grid);
 		mainPanel.add(footer);
 		
@@ -150,4 +208,6 @@ public class SelectCharView {
 		but.setIcon(new ImageIcon(temp));
 		
 	}
+        
+        
 }
