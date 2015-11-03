@@ -3,8 +3,13 @@ package maze;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -110,13 +115,15 @@ public class SelectCharView {
 		footer=new JPanel();
 		footer.add(startGame);
                 
-                /*set font
-        
+                Font gretoon=null;
+                
                     try {
+                        URL fontUrl = new URL("file://localhost//D://FAKS//ProgrammingProject//MazeGame//src//font//Gretoon.ttf");
                         //create the font to use. Specify the size!
-                        Font gretoon = Font.createFont(Font.TRUETYPE_FONT, new File("/images/Gretoon.ttf")).deriveFont(12f);
+                        gretoon = Font.createFont(Font.TRUETYPE_FONT, fontUrl.openStream());
+                        gretoon = gretoon.deriveFont(12f);
                         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-                        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/images/Gretoon.ttf")));
+                        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, fontUrl.openStream()));
                         frame.setFont(gretoon);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -126,14 +133,16 @@ public class SelectCharView {
                         e.printStackTrace();
                     }
 
-                    //heading.setFont(gretoon);
-                 */   
+                    
+                
                 
                 mainPanel=new BackgroundPanel(background);
                 mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
                 
                 heading=new JLabel(new ImageIcon(headingImg));
 		heading.setName("heading");
+                heading.setText("heading");
+                heading.setFont(gretoon);
 		header.add(heading);
                 header.add(Box.createRigidArea(new Dimension(0, 150)));
                 
@@ -158,10 +167,6 @@ public class SelectCharView {
 		cl=new JButton(new ImageIcon(chlorine));
 		cl.setName("cl");
 		elements.add(cl);
-		
-		ca=new JButton(new ImageIcon(calcium));
-		ca.setName("ca");
-		elements.add(ca);
 		
 		o=new JButton(new ImageIcon(oxygen));
 		o.setName("o");

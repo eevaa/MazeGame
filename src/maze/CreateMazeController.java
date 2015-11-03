@@ -27,8 +27,8 @@ public class CreateMazeController {
 
 	private void addListeners() {
 		// TODO Auto-generated method stub
-		for(int i=0;i<cmView.mazeDim;i++){
-			for(int j=0;j<cmView.mazeDim+10;j++){
+		for(int i=0;i<cmView.mazeDimY;i++){
+			for(int j=0;j<cmView.mazeDimX;j++){
 				JPanel jp=cmView.panels[i][j];
 				jp.addMouseListener(panelClicked);
 			}

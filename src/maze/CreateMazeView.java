@@ -17,9 +17,10 @@ public class CreateMazeView {
 	
 	SelectCharView scView=null;
 	JPanel horPanel=null;
-	int mazeDim=12;
+	int mazeDimY=12;
+	int mazeDimX=22;
 	JButton next=null;
-	JPanel panels[][]=new JPanel[mazeDim][mazeDim+10];
+	JPanel panels[][]=new JPanel[mazeDimY][mazeDimX];
 	
 	public CreateMazeView(SelectCharView scView){
 		this.scView=scView;
@@ -48,14 +49,14 @@ public class CreateMazeView {
 		//scView.grid=new JPanel();
 		scView.grid.setLayout(new BoxLayout(scView.grid, BoxLayout.Y_AXIS));
                 
-		for(int i=0;i<mazeDim;i++){
+		for(int i=0;i<mazeDimY;i++){
 			//String horPanName="horpan"+i;
 		 horPanel=new JPanel();
                  
                  
                  horPanel.add(Box.createRigidArea(new Dimension(10, 0)));
                  horPanel.setOpaque(false);
-			for(int j=0;j<mazeDim+10;j++){
+			for(int j=0;j<mazeDimX;j++){
 				
 				JPanel innerPanel=new JPanel();
 				//innerPanel.setBackground(Color.BLACK);
