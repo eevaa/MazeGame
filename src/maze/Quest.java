@@ -38,21 +38,42 @@ public class Quest {
 		Image hydrogen=null;
 		Image nitrogen=null;
 		Image carbon=null;
+                Image sodiumPlayer=null;
+		Image carbonPlayer=null;
+		Image chlorinePlayer=null;
+                Image hydrogenPlayer=null;
+		Image nitrogenPlayer=null;
+		Image calciumPlayer=null;
+                Image oxygenPlayer = null;
 		try {
-			sodium = ImageIO.read(this.getClass().getResource("/images/Na.png"));
-			sodium=sodium.getScaledInstance(30,30,1);
-			carbon = ImageIO.read(this.getClass().getResource("/images/C.png"));
-			carbon=carbon.getScaledInstance(30,30,1);
-			chlorine = ImageIO.read(this.getClass().getResource("/images/Cl.png"));
-			chlorine=chlorine.getScaledInstance(30,30,1);
-			hydrogen = ImageIO.read(this.getClass().getResource("/images/H.png"));
-			hydrogen=hydrogen.getScaledInstance(30,30,1);
-			calcium = ImageIO.read(this.getClass().getResource("/images/Ca.png"));
-			calcium=calcium.getScaledInstance(30,30,1);
-			nitrogen = ImageIO.read(this.getClass().getResource("/images/N.png"));
-			nitrogen=nitrogen.getScaledInstance(30,30,1);
-			oxygen = ImageIO.read(this.getClass().getResource("/images/O.png"));
-			oxygen=oxygen.getScaledInstance(30,30,1);
+			sodium = ImageIO.read(this.getClass().getResource("/images/na-maze.png"));
+			sodium=sodium.getScaledInstance(40,40,1);
+			carbon = ImageIO.read(this.getClass().getResource("/images/c-maze.png"));
+			carbon=carbon.getScaledInstance(40,40,1);
+			chlorine = ImageIO.read(this.getClass().getResource("/images/cl-maze.png"));
+			chlorine=chlorine.getScaledInstance(40,40,1);
+			hydrogen = ImageIO.read(this.getClass().getResource("/images/h-maze.png"));
+			hydrogen=hydrogen.getScaledInstance(40,40,1);
+			calcium = ImageIO.read(this.getClass().getResource("/images/ca-maze.png"));
+			calcium=calcium.getScaledInstance(40,40,1);
+			nitrogen = ImageIO.read(this.getClass().getResource("/images/n-maze.png"));
+			nitrogen=nitrogen.getScaledInstance(40,40,1);
+			oxygen = ImageIO.read(this.getClass().getResource("/images/o-maze.png"));
+			oxygen=oxygen.getScaledInstance(40,40,1);
+                        sodiumPlayer = ImageIO.read(this.getClass().getResource("/images/na-player.png"));
+			sodiumPlayer =sodiumPlayer.getScaledInstance(40,40,1);
+			carbonPlayer = ImageIO.read(this.getClass().getResource("/images/c-player.png"));
+			carbonPlayer =carbonPlayer.getScaledInstance(40,40,1);
+			chlorinePlayer = ImageIO.read(this.getClass().getResource("/images/cl-player.png"));
+			chlorinePlayer=chlorinePlayer.getScaledInstance(40,40,1);
+			hydrogenPlayer = ImageIO.read(this.getClass().getResource("/images/h-player.png"));
+			hydrogenPlayer=hydrogenPlayer.getScaledInstance(40,40,1);
+			calciumPlayer = ImageIO.read(this.getClass().getResource("/images/ca-player.png"));
+			calciumPlayer=calciumPlayer.getScaledInstance(40,40,1);
+			nitrogenPlayer = ImageIO.read(this.getClass().getResource("/images/n-player.png"));
+			nitrogenPlayer=nitrogenPlayer.getScaledInstance(40,40,1);
+			oxygenPlayer = ImageIO.read(this.getClass().getResource("/images/o-player.png"));
+			oxygenPlayer=oxygenPlayer.getScaledInstance(40,40,1);
 			
 		} catch (IOException e2) {
 			// TODO Auto-generated catch block
@@ -72,7 +93,7 @@ public class Quest {
 		//Water 
 		if (e.symbol=="h"){
 			e.name="hydrogen";
-			e.elemImage=hydrogen;
+			e.elemImage=hydrogenPlayer;
 			elems.add(h);
 			elems.add(o);
 			enemyList.add(n);
@@ -83,7 +104,7 @@ public class Quest {
 		//Carbon Dioxide
 		else if (e.symbol=="c"){
 			e.name="carbon";
-			e.elemImage=carbon;
+			e.elemImage=carbonPlayer;
 			elems.add(o);
 			elems.add(o);
 			enemyList.add(cl);
@@ -93,7 +114,7 @@ public class Quest {
 		//HydroChloric Acid
 		else if (e.symbol=="cl"){
 			e.name="chlorine";
-			e.elemImage=chlorine;
+			e.elemImage=chlorinePlayer;
 			elems.add(h);
 			enemyList.add(cl);
 			enemyList.add(na);
@@ -103,7 +124,7 @@ public class Quest {
 		//Sodium Chloride
 		else if (e.symbol=="na"){
 			e.name="sodium";
-			e.elemImage=sodium;
+			e.elemImage=sodiumPlayer;
 			elems.add(cl);
 			enemyList.add(ca);
 			enemyList.add(o);
@@ -113,7 +134,7 @@ public class Quest {
 		//Oxygen o2
 		else if (e.symbol=="o"){
 			e.name="oxygen";
-			e.elemImage=oxygen;
+			e.elemImage=oxygenPlayer;
 			elems.add(o);
 			enemyList.add(n);
 			enemyList.add(c);
@@ -123,7 +144,7 @@ public class Quest {
 		//Ammonia
 		else if (e.symbol=="n"){
 			e.name="nitrogen";
-			e.elemImage=nitrogen;
+			e.elemImage=nitrogenPlayer;
 			elems.add(h);
 			elems.add(h);
 			elems.add(h);
