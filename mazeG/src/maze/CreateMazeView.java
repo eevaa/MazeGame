@@ -1,7 +1,9 @@
 package maze;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
@@ -21,6 +23,7 @@ public class CreateMazeView {
 	int mazeDimX=22;
 	JButton next=null;
 	JPanel panels[][]=new JPanel[mazeDimY][mazeDimX];
+	JLabel heading2nd=null;
 	
 	public CreateMazeView(SelectCharView scView){
 		this.scView=scView;
@@ -34,7 +37,7 @@ public class CreateMazeView {
 	{	
 		scView.header.removeAll();
 		scView.grid.removeAll();
-                scView.pickPane.removeAll();
+        scView.pickPane.removeAll();
 		scView.footer.removeAll();
 		scView.mainPanel.repaint();
 		scView.mainPanel.revalidate();
@@ -42,12 +45,14 @@ public class CreateMazeView {
 		
 		
                 scView.mainPanel.setLayout(new BoxLayout(scView.mainPanel, BoxLayout.Y_AXIS));
-		JLabel heading=new JLabel("Click grid to create maze..");
-                heading.setFont(new Font("Arial", Font.PLAIN, 24));
-                scView.header.add(Box.createRigidArea(new Dimension(40, 0)));
+                JLabel heading=new JLabel("CLICK ON GRID TO CREATE WALLS");
+                heading2nd=new JLabel("<html><BR>Hold shift and mouse over to create a continuous line</html>");
+                heading.setFont(new Font("gretoon", Font.PLAIN, 26));
+                heading2nd.setFont(new Font("gretoon", Font.PLAIN, 18));
+                scView.header.add(Box.createRigidArea(new Dimension(0, 60)));
 		scView.header.add(heading);
-		//scView.grid=new JPanel();
 		scView.grid.setLayout(new BoxLayout(scView.grid, BoxLayout.Y_AXIS));
+                
                 
 		for(int i=0;i<mazeDimY;i++){
 			//String horPanName="horpan"+i;
@@ -73,17 +78,22 @@ public class CreateMazeView {
                         scView.grid.setMaximumSize(new Dimension(1078,588));
 			
 		}
-		
-		//scView.mainPanel.setPreferredSize(frame.getSize());
-		
+                JPanel infoPane = new JPanel();
+                infoPane.add(heading2nd);
+                infoPane.setOpaque(false);
+                scView.grid.add(infoPane);
+                
                 next=new JButton("Game On");
-                next.setPreferredSize(new Dimension(100, 40));
+                next.setPreferredSize(new Dimension(170, 60));
                 next.setBackground(new Color(75,202,210));
                 Border emptyBorder = BorderFactory.createEmptyBorder();
                 next.setBorder(emptyBorder);
-		next.setFont(new Font("Arial", Font.PLAIN, 18));
-                scView.grid.add(Box.createRigidArea(new Dimension(0, 30)));
-		scView.footer.add(next);
+              
+                next.setFont(new Font("gretoon", Font.PLAIN, 22));
+                //scView.grid.add(Box.createRigidArea(new Dimension(0, 10)));
+                scView.footer.add(next);
+                scView.frame.getRootPane().setDefaultButton(next);
+                
 		
 		
 		

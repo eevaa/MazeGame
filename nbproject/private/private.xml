@@ -6,12 +6,14 @@
             <file>file:/D:/FAKS/ProgrammingProject/MazeGame/src/maze/MazeConfig.java</file>
             <file>file:/D:/FAKS/ProgrammingProject/MazeGame/src/maze/CreateMazeView.java</file>
             <file>file:/D:/FAKS/ProgrammingProject/MazeGame/src/maze/SelectCharView.java</file>
+            <file>file:/D:/FAKS/ProgrammingProject/MazeGame/src/maze/Element.java</file>
             <file>file:/D:/FAKS/ProgrammingProject/MazeGame/src/maze/GameView.java</file>
-            <file>file:/D:/FAKS/ProgrammingProject/MazeGame/src/maze/Main.java</file>
             <file>file:/D:/FAKS/ProgrammingProject/MazeGame/src/maze/SelectCharController.java</file>
+            <file>file:/D:/FAKS/ProgrammingProject/MazeGame/src/maze/Main.java</file>
+            <file>file:/D:/FAKS/ProgrammingProject/MazeGame/src/maze/Quest.java</file>
             <file>file:/D:/FAKS/ProgrammingProject/MazeGame/src/maze/BackgroundPanel.java</file>
-            <file>file:/D:/FAKS/ProgrammingProject/MazeGame/src/maze/CreateMazeController.java</file>
             <file>file:/D:/FAKS/ProgrammingProject/MazeGame/src/maze/GameController.java</file>
+            <file>file:/D:/FAKS/ProgrammingProject/MazeGame/src/maze/CreateMazeController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -1,7 +1,6 @@
 package maze;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -10,14 +9,16 @@ import java.util.ArrayList;
 
 import java.util.Random;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class GameView {
+public class GameView{
 
 	CreateMazeView cmView=null;
 	JPanel startPanel=null;
@@ -32,11 +33,13 @@ public class GameView {
 	int currQuestCount=0;
 	int answerCount=0;
 	int enemyCount=0;
+        int life = 3;
 	Quest currQuest=null;
 	Boolean forward=true;
         JPanel mainPanel=null;
         JPanel header=null;
         JLabel heading=null;
+        JLabel heading2=null;
         Timer moveChar=null;
         
 	public GameView(CreateMazeView cmView) {
@@ -56,6 +59,23 @@ public class GameView {
         		
         		if(currQuestCount==quests.size()){
         			JOptionPane.showMessageDialog(null, "Congratulations! You completed the Game :)");
+        			 moveChar.stop();
+                     cmView.scView.header.removeAll();
+                     cmView.scView.header.repaint();
+                     cmView.scView.header.revalidate();
+                     cmView.scView.mainPanel.removeAll();
+                     cmView.scView.mainPanel.repaint();
+                     cmView.scView.mainPanel.revalidate();
+                     cmView.scView.footer.removeAll();
+                     cmView.scView.footer.repaint();
+                     cmView.scView.mainPanel.revalidate();
+                         
+                       
+                     //create new game - selectcharview
+                 	SelectCharView scView2=new SelectCharView();
+                 	SelectCharController scController = new SelectCharController(scView2);
+                         scView2.frame.setVisible(true);
+                         cmView.scView.frame.dispose();
         		}
 		
 		//Positioning Main Element 
@@ -64,7 +84,9 @@ public class GameView {
 		mainElem=new JLabel(new ImageIcon(currQuest.mainElement.elemImage));
 		startPanel.add(mainElem);
 		startPanel.repaint();
-		
+		//adding quest name to heading
+                heading.setText("QUEST: "+currQuest.questDisplayText);
+                heading2.setText("LIFE: "+life);
 		//Positioning Answer Elements
 		answersFound=0;
 		 answerCount=currQuest.elementsInQuest.size();
@@ -365,9 +387,37 @@ public class GameView {
 
 	private void die() {
 		// TODO Auto-generated method stub
+            life--;    
+            if (life<=2){
+                    JOptionPane.showMessageDialog(null, "Game Over!");
+                 moveChar.stop();
+                cmView.scView.header.removeAll();
+                cmView.scView.header.repaint();
+                cmView.scView.header.revalidate();
+                cmView.scView.mainPanel.removeAll();
+                cmView.scView.mainPanel.repaint();
+                cmView.scView.mainPanel.revalidate();
+                cmView.scView.footer.removeAll();
+                cmView.scView.footer.repaint();
+                cmView.scView.mainPanel.revalidate();
+                    
+                  
+                //create new game - selectcharview
+            	SelectCharView scView2=new SelectCharView();
+            	SelectCharController scController = new SelectCharController(scView2);
+                    scView2.frame.setVisible(true);
+                    cmView.scView.frame.dispose();
+//                cmView.scView.frame.getContentPane().add(selectView.mainPanel);
+//                cmView.scView.frame.getContentPane().revalidate();
+//                cmView.scView.frame.getContentPane().repaint();
+             //   selectView.frame.setVisible(true);
+                
+                }
+            else{
 		JOptionPane.showMessageDialog(null, "Oops! That was a disaster! Lets try again..");
-		//Remove all elements from this quest
-		for(int q=0;q<cmView.mazeDimY;q++){
+		
+                
+                    for(int q=0;q<cmView.mazeDimY;q++){
 			for(int r=0;r<cmView.mazeDimX;r++){
 				JPanel jpnl=cmView.panels[q][r];
 				if(jpnl.getComponentCount()>0){
@@ -375,9 +425,11 @@ public class GameView {
 				}
 				jpnl.repaint();
 			}
-		}
+                    }
 		answers.clear();
 		addQuestElements();
+                
+            }	
 	}
 
 	
@@ -389,15 +441,23 @@ public class GameView {
 		cmView.scView.header.removeAll();
 		cmView.scView.header.repaint();
 		cmView.scView.header.revalidate();
+		cmView.heading2nd.setText("");
                 
                 
                 mainPanel = new JPanel();
                 header = new JPanel();
                 cmView.scView.mainPanel.setLayout(new BoxLayout(cmView.scView.mainPanel, BoxLayout.Y_AXIS));
-		JLabel heading=new JLabel("QUEST #1: ");
-                heading.setFont(new Font("Arial", Font.PLAIN, 24));
+		heading=new JLabel();
+                heading.setFont(new Font("gretoon", Font.BOLD, 24));
+                heading2=new JLabel();
+                heading2.setFont(new Font("gretoon", Font.BOLD, 24));
+                cmView.scView.header.add(Box.createRigidArea(new Dimension(0, 50)));
                 //cmView.scView.header.add(Box.createRigidArea(new Dimension(0, 30)));
+                
 		cmView.scView.header.add(heading);
+                cmView.scView.header.add(heading2);
+               
+                
 		
 		for(int i=0;i<cmView.mazeDimY;i++){
 			for(int j=0;j<cmView.mazeDimX;j++){

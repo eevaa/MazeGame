@@ -1,7 +1,9 @@
 package maze;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,8 +13,8 @@ import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -38,8 +40,11 @@ public class GameView{
 	Boolean forward=true;
         JPanel mainPanel=null;
         JPanel header=null;
+        JPanel footer=null;
         JLabel heading=null;
         JLabel heading2=null;
+        static JPanel collected;
+        static ArrayList<JLabel> coll=new ArrayList<JLabel>();
         Timer moveChar=null;
         
 	public GameView(CreateMazeView cmView) {
@@ -53,16 +58,34 @@ public class GameView{
         	public void addQuestElements() {
 		// TODO Auto-generated method stub
         		
-        		System.out.println("Creating a new quest");
         		
         //Are all quests over?
         		
         		if(currQuestCount==quests.size()){
-        			JOptionPane.showMessageDialog(null, "Congratulations! You completed the Game :)");
+        			JOptionPane.showMessageDialog(cmView.scView.frame, "Congratulations! You completed the Game :)");
+        			 moveChar.stop();
+                     
+                     cmView.scView.header.removeAll();
+                     cmView.scView.header.repaint();
+                     cmView.scView.header.revalidate();
+                     cmView.scView.mainPanel.removeAll();
+                     cmView.scView.mainPanel.repaint();
+                     cmView.scView.mainPanel.revalidate();
+                     cmView.scView.footer.removeAll();
+                     cmView.scView.footer.repaint();
+                     cmView.scView.mainPanel.revalidate();
+                         
+                       
+                     //create new game - selectcharview
+                 	SelectCharView scView2=new SelectCharView();
+                 	SelectCharController scController = new SelectCharController(scView2);
+                         scView2.frame.setVisible(true);
+                         cmView.scView.frame.dispose();
         		}
 		
 		//Positioning Main Element 
 		startPanel=cmView.panels[0][0];
+                
 		currQuest=quests.get(currQuestCount);
 		mainElem=new JLabel(new ImageIcon(currQuest.mainElement.elemImage));
 		startPanel.add(mainElem);
@@ -89,13 +112,11 @@ public class GameView{
 		JPanel pan=cmView.panels[i][j];
 		answers.add(ans);
 		pan.add(ans);
-		
 		}
 		
 		//Start moving the correct answers
 		
 		for(JLabel jlb:answers){
-			System.out.println("size of answers"+answers.size());
 			autoMover(jlb);		
 		}
 		
@@ -242,7 +263,6 @@ public class GameView{
 	public boolean isBlocked(int[] index){
 		JPanel jp=cmView.panels[index[0]][index[1]];
                 if(maze.walls.contains(jp)){
-			System.out.println("yes..its  a wall");
 			return true;
 		}
 		
@@ -270,7 +290,6 @@ public class GameView{
 	public void moveLeft(JLabel lab){
 		
 		int[] index=getIndex((JPanel) lab.getParent());
-		//System.out.println("idex is"+index[0]+"and"+index[1]);
 		int[] indexNext={index[0],index[1]-1};
 		if(!isBlocked(indexNext)){
 		cmView.panels[index[0]][index[1]].removeAll();
@@ -283,9 +302,7 @@ public class GameView{
 		}
 	}
 	public void moveDown(JLabel lab){
-		System.out.println(lab.getParent());
 		int[] index=getIndex((JPanel) lab.getParent());
-		//System.out.println("idex is"+index[0]+"and"+index[1]);
 		int[] indexNext={index[0]+1,index[1]};
 		if(!isBlocked(indexNext)){
 		cmView.panels[index[0]][index[1]].removeAll();
@@ -297,9 +314,7 @@ public class GameView{
 		}
 	}
 	public void moveUp(JLabel lab){
-		System.out.println(lab.getParent());
 		int[] index=getIndex((JPanel) lab.getParent());
-		//System.out.println("idex is"+index[0]+"and"+index[1]);
 		int[] indexNext={index[0]-1,index[1]};
 		if(!isBlocked(indexNext)){
 		cmView.panels[index[0]][index[1]].removeAll();
@@ -337,18 +352,24 @@ public class GameView{
 		answersFound++;
 		moveChar.stop();
 		if(answersFound<answerCount){
-			answers.remove(answer);
-			System.out.println("answers size"+answers.size());
-			answer.getParent().removeAll();
-		JOptionPane.showMessageDialog(null, "Good! "+(answerCount-answersFound)+" more to go...");
+                
+		answers.remove(answer);
+                
+                answer.getParent().removeAll();
+		JOptionPane.showMessageDialog(cmView.scView.frame, "Good! "+(answerCount-answersFound)+" more to go...");
+                
 		targetPanel.add(playerLabel);
 		targetPanel.repaint();
-		moveChar.start();;
-		
+                setCollected(answer, answersFound);
+		moveChar.start();
 		}
 		else{
-			moveChar.stop();
-			JOptionPane.showMessageDialog(null, "Thats perfect!");
+                        collected.removeAll();
+                        collected.repaint();
+                        collected.revalidate();
+                        coll.clear();	
+                        moveChar.stop();
+                        JOptionPane.showMessageDialog(cmView.scView.frame, "Thats perfect!");
 			currQuestCount++;
 			
 			//Remove all elements from this quest
@@ -370,30 +391,37 @@ public class GameView{
 
 	private void die() {
 		// TODO Auto-generated method stub
-            life--;    
-            if (life<=2){
-                    JOptionPane.showMessageDialog(null, "Game Over!");
-                   
+            life--; 
+            collected.removeAll();
+            collected.repaint();
+            collected.revalidate();
+            coll.clear();
+            if (life<=0){
+                
+                JOptionPane.showMessageDialog(cmView.scView.frame, "Game Over!");
+                
+                moveChar.stop();
                 cmView.scView.header.removeAll();
-		cmView.scView.header.repaint();
+                cmView.scView.header.repaint();
                 cmView.scView.header.revalidate();
                 cmView.scView.mainPanel.removeAll();
-		cmView.scView.mainPanel.repaint();
+                cmView.scView.mainPanel.repaint();
                 cmView.scView.mainPanel.revalidate();
                 cmView.scView.footer.removeAll();
-		cmView.scView.footer.repaint();
+                cmView.scView.footer.repaint();
                 cmView.scView.mainPanel.revalidate();
-                        
+                    
+                  
                 //create new game - selectcharview
-                SelectCharView selectView=new SelectCharView();
-                SelectCharController scController = new SelectCharController(selectView);
-                cmView.scView.frame.add(selectView.mainPanel);
+            	SelectCharView scView2=new SelectCharView();
+            	SelectCharController scController = new SelectCharController(scView2);
+                scView2.frame.setVisible(true);
+                cmView.scView.frame.dispose();
                 
                 }
             else{
-		JOptionPane.showMessageDialog(null, "Oops! That was a disaster! Lets try again..");
-		
-                
+		JOptionPane.showMessageDialog(cmView.scView.frame, "Oops! That was a disaster! Lets try again..");
+                    
                     for(int q=0;q<cmView.mazeDimY;q++){
 			for(int r=0;r<cmView.mazeDimX;r++){
 				JPanel jpnl=cmView.panels[q][r];
@@ -408,30 +436,71 @@ public class GameView{
                 
             }	
 	}
+        
+        public void setCollected(JLabel element, int answerFound){
+            
+                Icon elementCopy = element.getIcon();
+                JLabel elementCopyLabel = new JLabel();
+                System.out.println(answerCount);
+                if(answerFound==1){
+                    JLabel collectedText = new JLabel("COLLECTED:  ");
+                    collectedText.setFont(new Font("arial", Font.BOLD, 24));
+                    collected.add(Box.createRigidArea(new Dimension(117, 0)));
+                    collected.add(collectedText, BorderLayout.CENTER);
+                }
+                elementCopyLabel.setIcon(elementCopy);
+                coll.add(elementCopyLabel);
+                
+                
+                for (int i=0; i<coll.size(); i++){
+                    collected.add(coll.get(i));
+                    collected.add(Box.createRigidArea(new Dimension(10, 0)));
+                    cmView.scView.header.repaint();
+                    cmView.scView.header.revalidate();
+                }
+                
+        }
 
 	
 	public void initGame()
 	{
+            
 		cmView.scView.footer.removeAll();
 		cmView.scView.footer.repaint();
 		cmView.scView.footer.revalidate();
 		cmView.scView.header.removeAll();
 		cmView.scView.header.repaint();
 		cmView.scView.header.revalidate();
+		cmView.heading2nd.setText("");
                 
+                cmView.scView.frame.setLayout(new BorderLayout());
                 
                 mainPanel = new JPanel();
                 header = new JPanel();
-                cmView.scView.mainPanel.setLayout(new BoxLayout(cmView.scView.mainPanel, BoxLayout.Y_AXIS));
+                footer = new JPanel();
+                
 		heading=new JLabel();
                 heading.setFont(new Font("gretoon", Font.BOLD, 24));
+                heading.setVerticalAlignment(heading.CENTER);
                 heading2=new JLabel();
-                heading2.setFont(new Font("gretoon", Font.BOLD, 24));
-                cmView.scView.header.add(Box.createRigidArea(new Dimension(0, 50)));
-                //cmView.scView.header.add(Box.createRigidArea(new Dimension(0, 30)));
+                heading2.setFont(new Font("gretoon", Font.BOLD, 32));
+                heading2.setForeground(new Color(75,202,210));
+                collected = new JPanel();
+                collected.setOpaque(false);
+                collected.setLayout(new BoxLayout(collected, BoxLayout.X_AXIS));
+                collected.setPreferredSize(new Dimension(1066,80));
+                collected.setMaximumSize(new Dimension(1066,80));
+                cmView.scView.mainPanel.setLayout(new BorderLayout());
+                cmView.scView.footer.setLayout(new BorderLayout());
+                cmView.scView.footer.revalidate();
+                cmView.scView.footer.repaint();
+                cmView.scView.footer.setPreferredSize(new Dimension(1066,50));
+                cmView.scView.footer.setMaximumSize(new Dimension(1066,50));
+                cmView.scView.footer.add(Box.createRigidArea(new Dimension(0, 10)));
                 
-		cmView.scView.header.add(heading);
-                cmView.scView.header.add(heading2);
+		cmView.scView.header.add(heading, BorderLayout.WEST);
+                cmView.scView.header.add(heading2, BorderLayout.EAST);
+                cmView.scView.footer.add(collected, BorderLayout.CENTER);
                
                 
 		
@@ -439,9 +508,10 @@ public class GameView{
 			for(int j=0;j<cmView.mazeDimX;j++){
 				JPanel temp=cmView.panels[i][j];
 				temp.setBorder(BorderFactory.createDashedBorder(null));
-				//temp.setBorder(null);
 				temp.setLayout(new BorderLayout());
-				temp.setPreferredSize(new Dimension(40,40));
+                                temp.setPreferredSize(new Dimension(48,48));
+                                temp.setMinimumSize(new Dimension(48,48));
+                                temp.setMaximumSize(new Dimension(48,48));
 				temp.removeMouseListener(temp.getMouseListeners()[0]);
 				temp.repaint();
 				temp.revalidate();

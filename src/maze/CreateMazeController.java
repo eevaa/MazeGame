@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.JOptionPane;
 
 import javax.swing.JPanel;
 import maze.MazeConfig;
@@ -27,49 +28,34 @@ public class CreateMazeController {
 
 	private void addListeners() {
 		// TODO Auto-generated method stub
+            
 		for(int i=0;i<cmView.mazeDimY;i++){
 			for(int j=0;j<cmView.mazeDimX;j++){
 				JPanel jp=cmView.panels[i][j];
 				jp.addMouseListener(panelClicked);
 			}
 		}
-		cmView.next.addMouseListener(mazeDone);
+		cmView.next.addActionListener(mazeDone);
 	}
 	
-	MouseListener mazeDone=new MouseListener() {
+	ActionListener mazeDone=new ActionListener() {
 		
 		@Override
-		public void mouseReleased(MouseEvent arg0) {
+		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			// TODO Auto-generated method stub
+                        if(maze.walls.size()>=10){
 			gc=new GameController(cmView,maze);
-			
-			
+                        }
+                        else{
+                            JOptionPane.showMessageDialog(cmView.scView.frame, "You have to select at least 10 walls!");
+                        }
 		}
 	};
+
+			
+			
+			
+
 	
 	MouseListener panelClicked=new MouseListener() {
 		

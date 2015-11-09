@@ -52,7 +52,6 @@ GameView gv=null;
 		@Override
 		public void keyTyped(KeyEvent arg0) {
 			// TODO Auto-generated method stub
-			System.out.println("bla bla bla");
 			
 		}
 		
@@ -65,7 +64,7 @@ GameView gv=null;
 		@Override
 		public void keyPressed(KeyEvent e) {
 			// TODO Auto-generated method stub
-			if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
+                    if (e.getKeyCode() == KeyEvent.VK_RIGHT ) {
 	            System.out.println("Right pressed.");
 	            gv.moveRight(gv.mainElem);
 	        } 

@@ -33,43 +33,22 @@ public class CreateMazeController {
 				jp.addMouseListener(panelClicked);
 			}
 		}
-		cmView.next.addMouseListener(mazeDone);
+		cmView.next.addActionListener(mazeDone);
 	}
 	
-	MouseListener mazeDone=new MouseListener() {
+	ActionListener mazeDone=new ActionListener() {
 		
 		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
+		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			gc=new GameController(cmView,maze);
-			
-			
 		}
 	};
+
+			
+			
+			
+
 	
 	MouseListener panelClicked=new MouseListener() {
 		

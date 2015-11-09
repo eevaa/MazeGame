@@ -13,15 +13,16 @@ Quest q=new Quest();
 GameView gv=null;
 
 
+
 	public GameController(CreateMazeView cmView,MazeConfig maz) {
 		// TODO Auto-generated constructor stub
 		this.cmView=cmView;
 		gv=new GameView(cmView);
 		gv.maze=maz;
 		gv.quests=getQuests();
+                
 		System.out.println("i GOT ALL THE QUESTS");
-
-		gv.addQuestElements();
+                gv.addQuestElements();
 		addAllListeners();
 	}
         
@@ -32,7 +33,6 @@ GameView gv=null;
 			Element e=new Element(s);
 			Quest ques=q.getQuest(e);
 			questList.add(ques);
-			
 		}
 		
 		return questList;

@@ -1,14 +1,17 @@
 package maze;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -68,15 +71,8 @@ public class SelectCharView{
 		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
                 frame.setTitle("ChemGame");
 		
-		header=new JPanel();
-		
 		grid=new JPanel();
-		grid.setLayout(new BoxLayout(grid, BoxLayout.Y_AXIS));
-                
-                pickPane=new JPanel();
-		pickPane.setLayout(new BoxLayout(pickPane, BoxLayout.Y_AXIS));
-		
-                      
+		grid.setLayout(new BoxLayout(grid, BoxLayout.Y_AXIS));    
 		
 		try {
 			sodium = ImageIO.read(this.getClass().getResource("/images/Na.png"));
@@ -107,12 +103,17 @@ public class SelectCharView{
                 Font gretoon=null;
                 
                     try {
-                        URL fontUrl = new URL("file://localhost//D://FAKS//ProgrammingProject//MazeGame//src//font//Gretoon.ttf");
+                       // URL fontUrl = new URL(this.getClass().getResource("/font/Gretoon.ttf"), null);
                         //create the font to use. Specify the size!
-                        gretoon = Font.createFont(Font.TRUETYPE_FONT, fontUrl.openStream());
+                        gretoon = Font.createFont(Font.TRUETYPE_FONT, new File(this.getClass().getResource("/font/Gretoon.ttf").toURI()));
                         gretoon = gretoon.deriveFont(12f);
                         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-                        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, fontUrl.openStream()));
+                        try {
+							ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File(this.getClass().getResource("/font/Gretoon.ttf").toURI())));
+						} catch (URISyntaxException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
                         frame.setFont(gretoon);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -120,7 +121,10 @@ public class SelectCharView{
                     catch(FontFormatException e)
                     {
                         e.printStackTrace();
-                    }
+                    } catch (URISyntaxException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 
                     
                 
@@ -130,16 +134,24 @@ public class SelectCharView{
                 
                 heading=new JLabel(new ImageIcon(headingImg));
 		heading.setName("heading");
-		header.add(heading);
-                header.setLayout(new FlowLayout());
-                header.add(Box.createRigidArea(new Dimension(0, 130)));
+                header=new JPanel();
+		
+                header.setLayout(new BorderLayout());
+                header.setPreferredSize(new Dimension(1060,150));
+                header.setMaximumSize(new Dimension(1060,150));
+                heading.setHorizontalAlignment(heading.CENTER);
+                heading.setVerticalAlignment(heading.CENTER);
+                header.add(heading);
                 
+                pickPane=new JPanel();
+		pickPane.setLayout(new BorderLayout());
                 pick = new JLabel("Select 3 elements:");
                 pick.setFont(new Font("gretoon", Font.PLAIN, 34));
 		pick.setName("pick");
 		pickPane.add(pick);
-                pickPane.add(Box.createRigidArea(new Dimension(0, 30)));
-              
+                pick.setHorizontalAlignment(pick.CENTER);
+                pickPane.setPreferredSize(new Dimension(1060,200));
+                pickPane.setMaximumSize(new Dimension(1060,200));
                 
 		na=new JButton(new ImageIcon(sodium));
 		na.setName("na");
@@ -177,23 +189,18 @@ public class SelectCharView{
                 startGame.setFont(new Font("gretoon", Font.PLAIN, 34));
                 startGame.setPreferredSize(new Dimension(200, 80));
                 startGame.setBackground(new Color(75,202,210));
-                Border emptyBorder = BorderFactory.createEmptyBorder();
-                startGame.setBorder(emptyBorder);
 		footer=new JPanel();
 		footer.add(startGame);
 		
                 
 		grid.setLayout(new FlowLayout());
-                pickPane.setLayout(new BoxLayout(pickPane, BoxLayout.Y_AXIS));
-                pick.setAlignmentX(pick.CENTER_ALIGNMENT);
-                pickPane.add(Box.createRigidArea(new Dimension(0, 30)));
 		mainPanel.add(header);
                 mainPanel.add(pickPane);
 		mainPanel.add(grid);
 		mainPanel.add(footer);
 		
 		frame.getContentPane().add(mainPanel);
-		
+		frame.getRootPane().setDefaultButton(startGame);
 		
 		
 	}
